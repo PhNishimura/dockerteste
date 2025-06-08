@@ -1,0 +1,279 @@
+/*
+[CR 6]. Site responsivo.
+Site responsivos para telas de smartphones e PC com o uso de Media Query.
+Para atender ao critério, utilizar os pontos de interrupção (dimensão que o layout deve ser reajustado)
+pequeno e grande especificados em:
+https://learn.microsoft.com/pt-br/windows/apps/design/layout/screen-sizes-and-breakpoints-for-responsive-design
+
+*/
+
+
+/* RESPONSIVIDADE */
+/* Telas pequenas (768px) */
+@media (max-width: 768px) {
+
+    /* Header */
+    .header {
+        padding: 0.5rem 1rem;
+    }
+
+    .header__nav {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .header__nav-links {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .header__nav-item {
+        margin: 0.5rem 0;
+        font-size: 0.8rem;
+    }
+
+    .header__theme-toggle {
+        margin-top: 1rem;
+    }
+
+    /* Main */
+    .main {
+        padding: 1rem;
+    }
+
+    /* Index: Banner */
+    .banner {
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+
+    .banner__title {
+        font-size: 2rem;
+    }
+
+    .banner__text {
+        font-size: 1rem;
+    }
+
+    /* Products */
+    .products__grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+
+    /* About */
+    .about {
+        flex-direction: column;
+    }
+
+    .about__image {
+        margin-bottom: 1rem;
+    }
+
+    .contact{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Contact Form */
+    .contact__form {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .contact__form-group {
+        margin-bottom: 1rem;
+    }
+
+    /* Register */
+    .register__form {
+        padding: 1rem;
+    }
+
+    .register__form-group {
+        margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .footer__container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer__column {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .footer__social-icons {
+        justify-content: center;
+    }
+}
+
+/* Telas médias (768px a 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* Header */
+    .header {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .header__nav {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+    .header__nav-links {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .header__nav-item {
+        margin: 0 1rem;
+        font-size: 0.8rem;
+    }
+
+    /* Main */
+    .main {
+        padding: 1.5rem;
+    }
+
+    /* Banner */
+    .banner {
+        padding: 3rem 1.5rem;
+    }
+
+    .banner__title {
+        font-size: 2.5rem;
+    }
+
+    .banner__text {
+        font-size: 1.2rem;
+    }
+
+    /* Products */
+    .products__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .contact{
+        display: flex;
+    }
+
+    /* Contact Form */
+    .contact__form {
+        padding: 1.5rem;
+        width: 50%;
+    }
+
+    /* About */
+    .about {
+        flex-direction: row;
+    }
+
+    .about__image {
+        flex: 1;
+        margin-right: 1rem;
+    }
+
+    .about__content {
+        flex: 2;
+    }
+
+    /* Register */
+    .register__form {
+        padding: 1.5rem;
+    }
+
+    /* Footer */
+    .footer__container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .footer__column {
+        flex: 1 1 33%;
+        text-align: left;
+        margin-bottom: 0;
+    }
+}
+
+/* Telas grandes (maiores que 1024px) */
+@media (min-width: 1024px) {
+
+    /* Header */
+    .header {
+        padding: 1rem 2rem;
+    }
+
+    .header__nav {
+        justify-content: space-between;
+    }
+
+    /* Main */
+    .main {
+        padding: 2rem;
+    }
+
+    /* Banner */
+    .banner {
+        padding: 4rem 2rem;
+    }
+
+    .banner__title {
+        font-size: 3rem;
+    }
+
+    .banner__text {
+        font-size: 1.5rem;
+    }
+
+    /* Products */
+    .products__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    /* About */
+    .about {
+        flex-direction: row;
+    }
+
+    .about__image {
+        flex: 1;
+    }
+
+    .about__content {
+        flex: 2;
+        padding-left: 2rem;
+    }
+
+    /* Contact Form */
+    .contact__form {
+        padding: 2rem;
+        width: 50%;
+    }
+
+    /* Register */
+    .register__form {
+        padding: 2rem;
+    }
+
+    /* Footer */
+    .footer__container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .footer__column {
+        flex: 1 1 30%;
+    }
+}
+
+

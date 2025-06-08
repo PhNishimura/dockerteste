@@ -1,0 +1,83 @@
+/*
+[CR 7]. Mudança de esquema de cores.
+Botão para alternância de esquema de cores do website.
+As cores devem ser mantidas ao reabrir o site em outra aba.
+Para atender ao critério, utilizar o localStorage do navegador.
+*/
+
+/* ALTERNÂNCIA DE CORES DO SITE */
+/* Tema claro (padrão) */
+:root {
+    --background-color: white;
+    --text-color-primary: black;
+    --text-color-secundary: #333333;
+    --header-background: burlywood;
+    --header-text-color: white;
+    --footer-background: #333333;
+    --footer-title-color: #f4b183;
+    --footer-text-color: white;
+    --footer-social-icons: #444;
+    --button-background: #f4a261;
+    --button-text-color: white;
+    --button-hover-background: darkorange;
+    --text-title-products: black;
+}
+
+/* Tema escuro */
+[data-theme="dark"] {
+    --background-color: #1e1e2f;
+    --text-color-primary: #eaeaea;
+    --text-color-secundary: #333333;
+    --header-background: #33334d;
+    --header-text-color: #eaeaea;
+    --footer-background: #111122;
+    --footer-title-color: #f4b183;
+    --footer-text-color: #eaeaea;
+    --footer-social-icons: #444;
+    --button-background: #5757a5;
+    --button-text-color: white;
+    --button-hover-background: #6c6ccf;
+    --text-title-products: #111122;
+}
+
+/* Aplicação das variáveis */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color-primary);
+}
+
+header {
+    background-color: var(--header-background);
+    color: var(--header-text-color);
+}
+
+footer {
+    background-color: var(--footer-background);
+    color: var(--footer-text-color);
+}
+
+button {
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: var(--button-hover-background);
+}
+
+.contact__info {
+    color: var(--footer-background);
+}
+
+.products-title-container h1{
+    color: var(--text-title-products);
+}
+
+.products-title-container p{
+    color: var(--text-title-products);
+}
+

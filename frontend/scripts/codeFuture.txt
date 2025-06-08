@@ -1,0 +1,243 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do DOM
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartSummary = document.querySelector('.cart-summary');
+    const emptyCart = document.querySelector('.cart-empty');
+    const subtotalElement = document.querySelector('.subtotal');
+    const totalElement = document.querySelector('.total-price');
+    const shippingElement = document.querySelector('.shipping');
+    const cartCountElement = document.querySelector('.header__cart-count');
+    
+    // Carrinho de compras (simulado)
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Atualizar contador do carrinho
+    function updateCartCount() {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCountElement.textContent = count;
+    }
+    
+    // Calcular subtotal
+    function calculateSubtotal() {
+        return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    }
+    
+    // Calcular frete (simulado)
+    function calculateShipping() {
+        return cart.length > 0 ? 15.00 : 0;
+    }
+    
+    // Atualizar resumo do pedido
+    function updateOrderSummary() {
+        const subtotal = calculateSubtotal();
+        const shipping = calculateShipping();
+        const total = subtotal + shipping;
+        
+        subtotalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
+        shippingElement.textContent = `R$ ${shipping.toFixed(2)}`;
+        totalElement.textContent = `R$ ${total.toFixed(2)}`;
+    }
+    
+    // Renderizar itens do carrinho
+    function renderCartItems() {
+        if (cart.length === 0) {
+            emptyCart.style.display = 'block';
+            cartSummary.style.display = 'none';
+            return;
+        }
+        
+        emptyCart.style.display = 'none';
+        cartSummary.style.display = 'block';
+        
+        cartItemsContainer.innerHTML = '';
+        
+        cart.forEach((item, index) => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h4 class="cart-item-title">${item.name}</h4>
+                    <p class="cart-item-price">R$ ${item.price.toFixed(2)}</p>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="quantity-button minus" data-index="${index}">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-index="${index}">
+                            <button class="quantity-button plus" data-index="${index}">+</button>
+                        </div>
+                        <button class="remove-item" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            cartItemsContainer.appendChild(cartItem);
+        });
+        
+        // Adicionar event listeners para os botões
+        document.querySelectorAll('.quantity-button').forEach(button => {
+            button.addEventListener('click', handleQuantityChange);
+        });
+        
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', handleInputChange);
+        });
+        
+        document.querySelectorAll('.remove-item').forEach(button => {
+            button.addEventListener('click', removeItem);
+        });
+    }
+    
+    // Manipulador de mudança de quantidade
+    function handleQuantityChange(e) {
+        const index = e.target.dataset.index;
+        const isPlus = e.target.classList.contains('plus');
+        
+        if (isPlus) {
+            cart[index].quantity += 1;
+        } else {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+            }
+        }
+        
+        saveCart();
+        renderCartItems();
+        updateOrderSummary();
+        updateCartCount();
+    }
+    
+    // Manipulador de input de quantidade
+    function handleInputChange(e) {
+        const index = e.target.dataset.index;
+        const newQuantity = parseInt(e.target.value);
+        
+        if (newQuantity > 0) {
+            cart[index].quantity = newQuantity;
+            saveCart();
+            updateOrderSummary();
+            updateCartCount();
+        } else {
+            e.target.value = cart[index].quantity;
+        }
+    }
+    
+    // Remover item do carrinho
+    function removeItem(e) {
+        const index = e.target.closest('.remove-item').dataset.index;
+        cart.splice(index, 1);
+        saveCart();
+        renderCartItems();
+        updateOrderSummary();
+        updateCartCount();
+    }
+    
+    // Salvar carrinho no localStorage
+    function saveCart() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    
+    // Botão de finalizar compra
+    const checkoutButton = document.querySelector('.checkout-button');
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', function() {
+            if (cart.length > 0) {
+                alert('Compra finalizada com sucesso!');
+                cart = [];
+                saveCart();
+                renderCartItems();
+                updateOrderSummary();
+                updateCartCount();
+            } else {
+                alert('Seu carrinho está vazio!');
+            }
+        });
+    }
+    
+    // Inicializar
+    updateCartCount();
+    renderCartItems();
+    updateOrderSummary();
+});
+
+
+Atualização no products.html para adicionar itens ao carrinho
+Adicione este script ao final do seu products.html (antes do fechamento do body):
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.product-card button');
+    
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productCard = this.closest('.product-card');
+            const productName = productCard.querySelector('.product-card__title').textContent;
+            const productPrice = parseFloat(productCard.querySelector('.product-card__preco').textContent.replace('R$ ', '').replace(',', '.'));
+            const productImage = productCard.querySelector('.product-card__imagem').src;
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Verificar se o produto já está no carrinho
+            const existingItem = cart.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Atualizar contador do carrinho
+            const cartCount = document.querySelector('.header__cart-count');
+            if (cartCount) {
+                const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+            
+            // Feedback visual
+            this.textContent = 'Adicionado!';
+            setTimeout(() => {
+                this.textContent = 'Compra';
+            }, 1000);
+        });
+    });
+    
+    // Atualizar contador do carrinho ao carregar a página
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = document.querySelector('.header__cart-count');
+    if (cartCount) {
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCount.textContent = totalItems;
+    }
+});
+</script>
+
+Funcionalidades implementadas:
+Exibição dos itens do carrinho com imagem, nome, preço e quantidade
+
+Controle de quantidade (aumentar/diminuir)
+
+Remoção de itens individualmente
+
+Cálculo automático de subtotal, frete e total
+
+Persistência dos dados usando localStorage
+
+Contador de itens no header
+
+Design responsivo que se adapta a diferentes tamanhos de tela
+
+Integração com o tema claro/escuro do site
+
+Feedback visual ao adicionar itens ao carrinho
+
+Estado vazio quando não há itens no carrinho
+
+Esta implementação mantém o mesmo estilo visual do seu site atual e adiciona todas as funcionalidades essenciais de um carrinho de compras.

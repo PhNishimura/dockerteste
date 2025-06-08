@@ -1,0 +1,5 @@
+/* Import all CSS from the original css files */
+@import '../../css/base.css';
+@import '../../css/layouts.css';
+@import '../../css/responsive.css';
+@import '../../css/theme.css';
