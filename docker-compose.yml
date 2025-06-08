@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   backend:
+    build: ./backend
     image: concord-backend
     ports:
       - "3001:3001"
@@ -9,6 +10,7 @@ services:
       - app-net
 
   frontend:
+    build: ./frontend
     image: concord-frontend
     ports:
       - "8080:80"
@@ -18,4 +20,3 @@ services:
 networks:
   app-net:
     driver: overlay
-
