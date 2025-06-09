@@ -10,16 +10,30 @@ export default (sequelize) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     itemId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'items',
+        key: 'id'
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       defaultValue: 1,
-    },
+      validate: {
+        min: 1,
+        isInt: true
+      }
+    }
   }, {
-    timestamps: false,
+    timestamps: true,
+    tableName: 'purchases'
   });
 };

@@ -18,14 +18,22 @@ export const useCartStore = defineStore('cart', () => {
     if (existingItem) {
       existingItem.quantity += 1
     } else {
-      items.value.push({ ...product, quantity: 1 })
+      items.value.push({ 
+        ...product, 
+        quantity: 1,
+        image: product.image || '/imagens/products-paper.png'
+      })
     }
+    
+    // Salvar no localStorage
+    saveToLocalStorage()
   }
 
   const removeItem = (productId) => {
     const index = items.value.findIndex(item => item.id === productId)
     if (index > -1) {
       items.value.splice(index, 1)
+      saveToLocalStorage()
     }
   }
 
@@ -33,12 +41,32 @@ export const useCartStore = defineStore('cart', () => {
     const item = items.value.find(item => item.id === productId)
     if (item && quantity > 0) {
       item.quantity = quantity
+      saveToLocalStorage()
     }
   }
 
   const clearCart = () => {
     items.value = []
+    saveToLocalStorage()
   }
+
+  const saveToLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(items.value))
+    }
+  }
+
+  const loadFromLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('cart')
+      if (saved) {
+        items.value = JSON.parse(saved)
+      }
+    }
+  }
+
+  // Carregar dados do localStorage ao inicializar
+  loadFromLocalStorage()
 
   return {
     items,
@@ -47,6 +75,7 @@ export const useCartStore = defineStore('cart', () => {
     addItem,
     removeItem,
     updateQuantity,
-    clearCart
+    clearCart,
+    loadFromLocalStorage
   }
 })

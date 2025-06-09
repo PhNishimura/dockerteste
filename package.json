@@ -1,0 +1,13 @@
+{
+  "name": "concord-supplies",
+  "version": "1.0.0",
+  "description": "Sistema de papelaria com Vue.js e Node.js",
+  "scripts": {
+    "dev": "docker-compose up --build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down"
+  },
+  "keywords": ["vue", "node", "docker", "papelaria"],
+  "author": "Concord Supplies",
+  "license": "MIT"
+}
