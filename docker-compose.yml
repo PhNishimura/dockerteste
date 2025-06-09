@@ -3,20 +3,29 @@ version: "3.8"
 services:
   backend:
     build: ./backend
-    image: concord-backend
+    container_name: concord-backend
     ports:
       - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    volumes:
+      - ./backend/database.sqlite:/app/database.sqlite
     networks:
-      - app-net
+      - app-network
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
-    image: concord-frontend
+    container_name: concord-frontend
     ports:
       - "8080:80"
+    depends_on:
+      - backend
     networks:
-      - app-net
+      - app-network
+    restart: unless-stopped
 
 networks:
-  app-net:
-    driver: overlay
+  app-network:
+    driver: bridge

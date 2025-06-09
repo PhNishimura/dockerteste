@@ -41,6 +41,12 @@
           </li>
         </ul>
         <div class="header__cart-container">
+          <router-link to="/cart" class="header__cart-link">
+            <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+            <span v-if="cartStore.totalItems > 0" class="header__cart-count">
+              {{ cartStore.totalItems }}
+            </span>
+          </router-link>
           <router-link to="/login" class="header__button">Login</router-link>
         </div>
       </nav>
@@ -103,3 +109,8 @@
   </div>
 </template>
 
+<script setup>
+import { useCartStore } from './stores/cart'
+
+const cartStore = useCartStore()
+</script>

@@ -6,11 +6,17 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "axios": "^1.5.0",
-    "vue": "^3.4.0"
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
     "vite": "^5.0.0"
   }
 }

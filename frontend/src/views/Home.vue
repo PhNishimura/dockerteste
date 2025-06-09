@@ -1,4 +1,3 @@
-```vue
 <template>
   <main>
     <section class="banner">
@@ -9,6 +8,5 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 </script>
-```
